@@ -1,33 +1,36 @@
 # Supervised Machine Learning Homework - Predicting Credit Risk
 
-In this assignment, you will be building a machine learning model that attempts to predict whether a loan from LendingClub will become high risk or not. 
+In this project, I built a machine learning model that attempts to predict whether or not a lone will become high-risk. 
 
 ## Background
 
-LendingClub is a peer-to-peer lending services company that allows individual investors to partially fund personal loans as well as buy and sell notes backing the loans on a secondary market. LendingClub offers their previous data through an API.
-
-You will be using this data to create machine learning models to classify the risk level of given loans. Specifically, you will be comparing the Logistic Regression model and Random Forest Classifier.
-
-## Instructions
+The purpose of this project is to evaluate a subset of a lending company's loan data that is available through an API call.  The purpose is to use a machine leanring model to classify the risk level of given laons by comparing the Logistic Regression model with the Random Forest Classifer fo both scaled and unscaled data.  
 
 ### Retrieve the data
 
-In the `Generator` folder in `Resources`, there is a [GenerateData.ipynb](/Resources/Generator/GenerateData.ipynb) notebook that will download data from LendingClub and output two CSVs: 
+A [GenerateData.ipynb](/Resources/Generator/GenerateData.ipynb) script has been put together in the `Generator` folder within the `Resources` folder that was designed to automate the retrieval of lending data that produces an output of two CSVs: 
 
 * `2019loans.csv`
 * `2020Q1loans.csv`
 
-You will be using an entire year's worth of data (2019) to predict the credit risk of loans from the first quarter of the next year (2020).
+For this machine learning model, an entire year's worth of data (2019) will be used to predict the credit risk of loans from the first quarter of the following year (2020).
 
-Note: these two CSVs have been undersampled to give an even number of high risk and low risk loans. In the original dataset, only 2.2% of loans are categorized as high risk. To get a truly accurate model, special techniques need to be used on imbalanced data. Undersampling is one of those techniques. Oversampling and SMOTE (Synthetic Minority Over-sampling Technique) are other techniques that are also used.
+Because the CSVs have been undersampled to give an even number of high risk and low risk loans, undersampling was used because techniques are required when the data is imbalanced. 
 
-## Preprocessing: Convert categorical data to numeric
+## Preprocessing: 
 
-Create a training set from the 2019 loans using `pd.get_dummies()` to convert the categorical data to numeric columns. Similarly, create a testing set from the 2020 loans, also using `pd.get_dummies()`. Note! There are categories in the 2019 loans that do not exist in the testing set. If you fit a model to the training set and try to score it on the testing set as is, you will get an error. You need to use code to fill in the missing categories in the testing set. 
+A training dataset was created from the 2019 loans using `pd.get_dummies()`.  The categorical data was converted to numeric columns. Similarly, a testing dataset was created from the 2020 loan data, also by using `pd.get_dummies()`. Because there are categories in the 2019 loans that do not exist in the testing set, code was used to fill in the missing categories in the testing dataset.  That way, it allowed the possibility of fitting a model to the training set and try to score it on the testing set. You need to use code to fill in the missing categories in the testing set. 
+
+    `# Convert categorical data to numeric and separate target feature for testing data
+    test_df_sample = pd.get_dummies(test_df)
+    test_df_x = test_df_sample.drop(['loan_status_low_risk', 'loan_status_high_risk'], axis=1)
+    test_df_y = test_df_sample['loan_status_low_risk'].values
+    print(test_df_x.head())
+    print(f"train_df_y array is {train_df_y}.")`
 
 ## Consider the models
 
-You will be creating and comparing two models on this data: a logistic regression, and a random forests classifier. Before you create, fit, and score the models, make a prediction as to which model you think will perform better. You do not need to be correct! Write down (in markdown cells in your Jupyter Notebook or in a separate document) your prediction, and provide justification for your educated guess.
+Two models were used for this dataset: a logistic regression, and a random forests classifier. Before the model was fit, scored, and predicted, a pre-prediction is listed in the Jupyter Notebook as well as a summary of the educated guess. 
 
 ## Fit a LogisticRegression model and RandomForestClassifier model
 
