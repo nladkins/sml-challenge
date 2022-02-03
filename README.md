@@ -113,3 +113,16 @@ Result:
 
     Random Forest Classifier model score for the scaled training data is 1.0
     Random Forest Classifier model score for the scaled testing data is 1.0
+
+## Classification Report
+
+A classification report was preparied which is provided in the code.  This found that the test data was highly sensitive and was not precise which seems to conclude that the data is insufficient enough to make it stable.  Further, it includes a lot of false positives and true negatives.  
+
+                precision    recall  f1-score   support
+
+            0       0.67      0.36      0.47      2351
+            1       0.56      0.82      0.67      2351
+
+        accuracy                           0.59      4702
+    macro avg       0.61      0.59      0.57      4702
+    weighted avg       0.61      0.59      0.57      4702
