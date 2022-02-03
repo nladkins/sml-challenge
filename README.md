@@ -22,13 +22,9 @@ Because the CSVs have been undersampled to give an even number of high risk and 
 A training dataset was created from the 2019 loans using `pd.get_dummies()`.  The categorical data was converted to numeric columns. Similarly, a testing dataset was created from the 2020 loan data, also by using `pd.get_dummies()`. Because there are categories in the 2019 loans that do not exist in the testing set, code was used to fill in the missing categories in the testing dataset.  That way, it allowed the possibility of fitting a model to the training set and try to score it on the testing set. You need to use code to fill in the missing categories in the testing set. 
 
 `# Convert categorical data to numeric and separate target feature for testing data
-
 test_df_sample = pd.get_dummies(test_df)
-
 test_df_x = test_df_sample.drop(["loan_status_low_risk", 'loan_status_high_risk'], axis=1)
-
 test_df_y = test_df_sample['loan_status_low_risk'].values
-
 print(test_df_x.head())
 print(f"train_df_y array is {train_df_y}.")`
 
