@@ -39,21 +39,17 @@ Two models were used for this dataset: a logistic regression, and a random fores
 After the preprocessing, a `LogisticRegression` model was used to fit the data and print the model's score for the unscaled data.  
 
 `# Train the Logistic Regression model on the unscaled data and print the model score
-
 classifier = LogisticRegression()
 classifier
-
 classifier.fit(train_df_x, train_df_y)
 classifier.fit(test_df_x, test_df_y)
-
 print(f"The Logistic Regression model Score for the unscaled training data is  {classifier.score(train_df_x, train_df_y)}".)
-
 print(f"The Logistic Regression model Score for the unscaled testing data is {classifier.score(test_df_x, test_df_y)}".)`
 
 
 Result:  
-    `The Logistic Regression model Score for the unscaled training data is 0.5132183908045977.
 
+    `The Logistic Regression model Score for the unscaled training data is 0.5132183908045977.
     The Logistic Regression model Score for the unscaled testing data is  0.8268821777966823.`
 
 
@@ -61,14 +57,11 @@ Following this, a RandomForestClassifier was used to fit the data and print the 
 
 
 `# Train a Random Forest Classifier model and print the model score
-
 rlf_train = RandomForestClassifier(random_state=1, n_estimators=500).fit(train_df_x, train_df_y)
-
 rlf_test = RandomForestClassifier(random_state=1, n_estimators=500).fit(test_df_x, test_df_y)
-
 print(f'The Random Forest Classifier model Score for the unscaled training data is {rlf_train.score(train_df_x, train_df_y)}')
-
 print(f'The Random Forest Classifier model Score for the unscaled training data is {rlf_test.score(test_df_x, test_df_y)}')`
+
 
 Result:
 
@@ -83,23 +76,17 @@ The results varied considerably, so the preprocessing was revisited.
 The data going into these models was never scaled, which is an important step in preprocessing. The `StandardScaler` was used to scale the training and testing sets. 
 
 `# Scale the data
-
 scaler = StandardScaler().fit(train_df_x)
-
 X_train_scaled = scaler.transform(train_df_x)
-
 X_test_scaled = scaler.transform(test_df_x)
-
 reg_train = LinearRegression().fit(X_train_scaled, train_df_y)
-
 reg_test = LinearRegression().fit(X_test_scaled, test_df_y)
-
 print(f"Linear Regression Score for the scaled training data is {reg_train.score(X_train_scaled, train_df_y)}.")
-
 print(f"Linear Regression Score for the scaled testing data is {reg_test.score(X_test_scaled, test_df_y)}.")`
 
 
 Result:
+
     `Linear Regression Score for the training data is 0.15694581802378016.
     Linear Regression Score for the testing data is 0.42057816541051896.`
 
@@ -109,28 +96,22 @@ Before re-fitting the LogisticRegression and RandomForestClassifier models on th
 Once the data was scaled, the `LogisticRegression` and `RandomForestClassifier` models were reapplied on the scaled data. The difference was significant and seemed to imply that the data is insufficient to make a conclusion on high-risk vs. low-risk.
 
 `# Train the Logistic Regression model on the scaled data and print the model score
-
 clf_train_scaled = LogisticRegression().fit(X_train_scaled, train_df_y)
-
 clf_test_scaled = LogisticRegression().fit(X_test_scaled, test_df_y)
-
 print(f'The Training Logistic Regression Score for the scaled data is {clf_train_scaled.score(X_train_scaled, train_df_y)}')
-
 print(f'The Testing Logistic Regression Score for the scaled data is {clf_test_scaled.score(X_test_scaled, test_df_y)}')`
 
 
 Result:
+
     `The Training Logistic Regression Score for the scaled data is 0.713136288998358
     The Testing Logistic Regression Score for the scaled data is 0.893236920459379`
 
 
 `# Train a Random Forest Classifier model on the scaled data and print the model score
 rlf_train_scaled = RandomForestClassifier(random_state=1, n_estimators=500).fit(X_train_scaled, train_df_y)
-
 rlf_test_scaled = RandomForestClassifier(random_state=1, n_estimators=500).fit(X_test_scaled, test_df_y)
-
 print(f'Random Forest Classifier model score for the scaled training data is {rlf_train_scaled.score(X_train_scaled, train_df_y)}')
-
 print(f'Random Forest Classifier model score for the scaled testing data is {rlf_test_scaled.score(X_test_scaled, test_df_y)}')`
 
 
