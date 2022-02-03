@@ -47,8 +47,8 @@ print(f"The Logistic Regression model Score for the unscaled testing data is {cl
 
 Result:  
 
-    `The Logistic Regression model Score for the unscaled training data is 0.5132183908045977.
-    The Logistic Regression model Score for the unscaled testing data is  0.8268821777966823.`
+    The Logistic Regression model Score for the unscaled training data is 0.5132183908045977.
+    The Logistic Regression model Score for the unscaled testing data is  0.8268821777966823.
 
 
 Following this, a RandomForestClassifier was used to fit the data and print the model's score for the unscaled data.
