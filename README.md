@@ -47,23 +47,22 @@ After the preprocessing, a `LogisticRegression` model was used to fit the data a
 
 Result:  
 
-    The Logistic Regression model Score for the unscaled training data is 0.5132183908045977.
-    The Logistic Regression model Score for the unscaled testing data is  0.8268821777966823.
+    The Logistic Regression model Score for the unscaled training data is  0.648440065681445
+    The Logistic Regression model Score for the unscaled testing data is  0.5253083794130158
 
 
 Following this, a RandomForestClassifier was used to fit the data and print the model's score for the unscaled data.
 
 
     rlf_train = RandomForestClassifier(random_state=1, n_estimators=500).fit(train_df_x, train_df_y)
-    rlf_test = RandomForestClassifier(random_state=1, n_estimators=500).fit(test_df_x, test_df_y)
-    print(f'The Random Forest Classifier model Score for the unscaled training data is {rlf_train.score(train_df_x, train_df_y)}')
-    print(f'The Random Forest Classifier model Score for the unscaled training data is {rlf_test.score(test_df_x, test_df_y)}')
+    print(f"The Random Forest Classifier model Score for the unscaled training data is {rlf_train.score(train_df_x, train_df_y)}.")
+    print(f"The Random Forest Classifier model Score for the unscaled testing data is {rlf_train.score(test_df_x, test_df_y)}.")
 
 
 Result:
 
-    The Random Forest Classifier model Score for the unscaled training data is 1.0
-    The Random Forest Classifier model Score for the unscaled training data is 1.0
+    Random Forest Classifier model score for the scaled training data is 1.0
+    Random Forest Classifier model score for the scaled testing data is 0.6193109315185028
 
 
 The results varied considerably, so the preprocessing was revisited.
@@ -76,15 +75,14 @@ The data going into these models was never scaled, which is an important step in
     X_train_scaled = scaler.transform(train_df_x)
     X_test_scaled = scaler.transform(test_df_x)
     reg_train = LinearRegression().fit(X_train_scaled, train_df_y)
-    reg_test = LinearRegression().fit(X_test_scaled, test_df_y)
     print(f"Linear Regression Score for the scaled training data is {reg_train.score(X_train_scaled, train_df_y)}.")
-    print(f"Linear Regression Score for the scaled testing data is {reg_test.score(X_test_scaled, test_df_y)}.")
+    print(f"Linear Regression Score for the scaled testing data is {reg_train.score(X_test_scaled, test_df_y)}.")
 
 
 Result:
 
-    Linear Regression Score for the training data is 0.15694581802378016.
-    Linear Regression Score for the testing data is 0.42057816541051896.
+    Linear Regression Score for the scaled training data is 0.15694581802378016.
+    Linear Regression Score for the scaled testing data is -5.139575915335923e+27.
 
 
 Before re-fitting the LogisticRegression and RandomForestClassifier models on the scaled data, another prediction is included prior to seeing how the scaling will affect the accuracy of the models.  
@@ -92,9 +90,8 @@ Before re-fitting the LogisticRegression and RandomForestClassifier models on th
 Once the data was scaled, the `LogisticRegression` and `RandomForestClassifier` models were reapplied on the scaled data. The difference was significant and seemed to imply that the data is insufficient to make a conclusion on high-risk vs. low-risk.
 
     clf_train_scaled = LogisticRegression().fit(X_train_scaled, train_df_y)
-    clf_test_scaled = LogisticRegression().fit(X_test_scaled, test_df_y)
-    print(f'The Training Logistic Regression Score for the scaled data is {clf_train_scaled.score(X_train_scaled, train_df_y)}')
-    print(f'The Testing Logistic Regression Score for the scaled data is {clf_test_scaled.score(X_test_scaled, test_df_y)}')
+    print(f'The Logistic Regression Score for the scaled data is {clf_train_scaled.score(X_train_scaled, train_df_y)}')
+    print(f'The Logistic Regression Score for the scaled data is {clf_train_scaled.score(X_test_scaled, test_df_y)}')
 
 
 Result:
@@ -102,27 +99,31 @@ Result:
     The Training Logistic Regression Score for the scaled data is 0.713136288998358
     The Testing Logistic Regression Score for the scaled data is 0.893236920459379
 
+This is the code for the `RandomForestClassifier` model that was reapplied on the scaled data. 
 
     rlf_train_scaled = RandomForestClassifier(random_state=1, n_estimators=500).fit(X_train_scaled, train_df_y)
-    rlf_test_scaled = RandomForestClassifier(random_state=1, n_estimators=500).fit(X_test_scaled, test_df_y)
     print(f'Random Forest Classifier model score for the scaled training data is {rlf_train_scaled.score(X_train_scaled, train_df_y)}')
-    print(f'Random Forest Classifier model score for the scaled testing data is {rlf_test_scaled.score(X_test_scaled, test_df_y)}')
+    print(f'Random Forest Classifier model score for the scaled testing data is {rlf_train_scaled.score(X_test_scaled, test_df_y)}')
 
 
 Result:
 
     Random Forest Classifier model score for the scaled training data is 1.0
-    Random Forest Classifier model score for the scaled testing data is 1.0
+    Random Forest Classifier model score for the scaled testing data is 0.6193109315185028
 
 ## Classification Report
 
 A classification report was preparied which is provided in the code.  This found that the test data was highly sensitive and was not precise which seems to conclude that the data is insufficient enough to make it stable.  Further, it includes a lot of false positives and true negatives.  
 
-                precision    recall  f1-score   support
+              precision    recall  f1-score   support
 
-            0       0.67      0.36      0.47      2351
-            1       0.56      0.82      0.67      2351
+           0       0.51      0.24      0.33      2351
+           1       0.50      0.77      0.61      2351
 
-        accuracy                           0.59      4702
-    macro avg       0.61      0.59      0.57      4702
-    weighted avg       0.61      0.59      0.57      4702
+    accuracy                           0.51      4702
+   macro avg       0.51      0.51      0.47      4702
+weighted avg       0.51      0.51      0.47      4702
+
+## Conclusion
+
+#### The model does not seem precise and is very sensitive which again leads me to think that there is insufficient data in this sample.
